@@ -1,8 +1,18 @@
-# .pre-commit-config.yaml
+# Read pre-commit hook framework https://pre-commit.com/ for more details about the structure of config yaml file and how git pre-commit would invoke each hook.
 repos:
--   repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
-    hooks:
-    -   id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
-        exclude: .gitignore
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+    - id: check-yaml
+    - id: check-added-large-files
+    - id: check-ast
+    - id: check-json
+    - id: check-merge-conflict
+    - id: detect-private-key
+- repo: https://github.com/ibm/detect-secrets
+  rev: 0.13.1+ibm.61.dss
+  hooks:
+    - id: detect-secrets # pragma: whitelist secret
+      args: [--baseline, .secrets.baseline, --use-all-plugins]
